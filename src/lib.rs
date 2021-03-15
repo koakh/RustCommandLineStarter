@@ -5,8 +5,10 @@ use structopt::StructOpt;
 #[derive(StructOpt)]
 pub struct Cli {
   /// the pattern to look for
+  #[structopt(short = "f", long = "pattern")]
   pub pattern: String,
   /// the path to the file to read
+  #[structopt(short = "p", long = "path")]
   #[structopt(parse(from_os_str))]
   pub path: std::path::PathBuf,
 }
@@ -14,3 +16,6 @@ pub struct Cli {
 pub fn greeting() {
   println!("Hello, world!");
 }
+
+
+// pub fn parse_content(f: io::Result<File>, )

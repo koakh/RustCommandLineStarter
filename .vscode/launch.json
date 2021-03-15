@@ -1,0 +1,67 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "Debug executable 'command-line-apps-in-rust'",
+      "cargo": {
+        "args": [
+          "build",
+          "--bin=command-line-apps-in-rust",
+          "--package=command-line-apps-in-rust"
+        ],
+        "filter": {
+          "name": "command-line-apps-in-rust",
+          "kind": "bin"
+        }
+      },
+      "args": [
+        "-f", "0.8.15",
+        "-p", "./logs/snapper.log"
+      ],
+      "cwd": "${workspaceFolder}"
+    },    
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "Debug unit tests in library 'command-line-apps-in-rust'",
+      "cargo": {
+        "args": [
+          "test",
+          "--no-run",
+          "--lib",
+          "--package=command-line-apps-in-rust"
+        ],
+        "filter": {
+          "name": "command-line-apps-in-rust",
+          "kind": "lib"
+        }
+      },
+      "args": [],
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "Debug unit tests in executable 'command-line-apps-in-rust'",
+      "cargo": {
+        "args": [
+          "test",
+          "--no-run",
+          "--bin=command-line-apps-in-rust",
+          "--package=command-line-apps-in-rust"
+        ],
+        "filter": {
+          "name": "command-line-apps-in-rust",
+          "kind": "bin"
+        }
+      },
+      "args": [],
+      "cwd": "${workspaceFolder}"
+    }
+  ]
+}
