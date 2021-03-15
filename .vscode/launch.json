@@ -20,7 +20,7 @@
         }
       },
       "args": [
-        "-f", "0.8.15",
+        "-f", "0.8.15-NULL",
         "-p", "./logs/snapper.log"
       ],
       "cwd": "${workspaceFolder}"
