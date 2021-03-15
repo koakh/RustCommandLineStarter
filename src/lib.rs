@@ -18,4 +18,4 @@ pub fn greeting() {
 }
 
 
-// pub fn parse_content(f: io::Result<File>, )
+// pub fn search_content(f: io::Result<File>, )
