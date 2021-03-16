@@ -1,5 +1,5 @@
 #![allow(dead_code)]
-use serde::{Deserialize, Serialize};
+use serde::{de, Deserialize, Serialize};
 use serde_json::Value;
 use std::collections::HashMap;
 use std::io::Read;
@@ -60,14 +60,14 @@ pub async fn async_request_untyped() -> Result<Value, Box<dyn std::error::Error>
 }
 
 /// Parsing JSON as strongly typed data structures
-pub async fn async_request() -> Result<HttpBinResponse, Box<dyn std::error::Error>> {
-// pub async fn async_request<T>() -> Result<T, Box<dyn std::error::Error>> {  
+// pub async fn async_request() -> Result<HttpBinResponse, Box<dyn std::error::Error>> {
+pub async fn async_request<T: de::DeserializeOwned>() -> Result<Box<T>, Box<dyn std::error::Error>> {  
   let res = reqwest::get("http://httpbin.org/get").await.unwrap();
   println!("status: {}", res.status());
   println!("headers:\n{:#?}", res.headers());
   let body = res.text().await.unwrap();
   println!("body:\n{}", body);
-  let v: HttpBinResponse = serde_json::from_str(&body)?;
+  let v: Box<T> = serde_json::from_str(&body)?;
   Ok(v)
 }
 

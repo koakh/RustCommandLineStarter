@@ -62,8 +62,8 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
       error!("{}", error);
     }
   }
-  // Parsing JSON as strongly typed data structures
-  let value_typed: Result<HttpBinResponse,_> = async_request().await;
+  // Parsing JSON as strongly typed data structures, and with generics
+  let value_typed: Result<Box<HttpBinResponse>,_> = async_request().await;
   match value_typed {
     Ok(value) => {
       println!("value_typed: called from origin: {}", value.origin)
