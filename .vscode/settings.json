@@ -1,6 +1,7 @@
 {
   "cSpell.words": [
     "libsnapper",
+    "reqwest",
     "snapperd",
     "structopt"
   ]

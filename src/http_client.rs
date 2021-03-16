@@ -1,6 +1,6 @@
 #![allow(dead_code)]
-use serde::Deserialize;
-use serde_json::{Deserializer, /*Result,*/ Value};
+use serde::{Deserialize, Serialize};
+use serde_json::Value;
 use std::collections::HashMap;
 use std::io::Read;
 
@@ -17,8 +17,10 @@ use std::io::Read;
 
 // https://users.rust-lang.org/t/how-to-get-ok-value-return-from-the-function/40848
 
+#[derive(Serialize, Deserialize, Debug)]
 pub struct HttpBinResponse {
-  origin: String,
+  // must be public
+  pub origin: String,
 }
 
 // #[derive(Serialize, Deserialize, Debug)]
@@ -28,8 +30,10 @@ pub struct HttpResponse {
   headers: [String],
 }
 
-/// async request to unit
-pub async fn async_request() -> Result<Value, Box<dyn std::error::Error>/*reqwest::Error*/> {
+/// Operating on untyped JSON values
+/// async request to serde_json::Value
+pub async fn async_request_untyped() -> Result<Value, Box<dyn std::error::Error> /*reqwest::Error*/>
+{
   let res = reqwest::get("http://httpbin.org/get").await.unwrap();
   println!("status: {}", res.status());
   println!("headers:\n{:#?}", res.headers());
@@ -49,8 +53,21 @@ pub async fn async_request() -> Result<Value, Box<dyn std::error::Error>/*reqwes
   let v: Value = serde_json::from_str(data)?;
 
   // Access parts of the data by indexing with square brackets.
+  // output value in caller
   // println!("Please call {} at the number {}", v["name"], v["phones"][0]);
 
+  Ok(v)
+}
+
+/// Parsing JSON as strongly typed data structures
+pub async fn async_request() -> Result<HttpBinResponse, Box<dyn std::error::Error>> {
+// pub async fn async_request<T>() -> Result<T, Box<dyn std::error::Error>> {  
+  let res = reqwest::get("http://httpbin.org/get").await.unwrap();
+  println!("status: {}", res.status());
+  println!("headers:\n{:#?}", res.headers());
+  let body = res.text().await.unwrap();
+  println!("body:\n{}", body);
+  let v: HttpBinResponse = serde_json::from_str(&body)?;
   Ok(v)
 }
 

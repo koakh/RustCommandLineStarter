@@ -1,0 +1,73 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Rust: cargo run",
+      "type": "cargo",
+      "subcommand": "run",
+      "problemMatcher": [
+        "$rustc"
+      ],
+      "group": "build"
+    },
+    {
+      "label": "Rust: cargo run with args",
+      "type": "shell",
+      "problemMatcher": [
+        "$rustc"
+      ],
+      "command": "cargo",
+      "args": [
+        "run",
+        "--",
+        "-f",
+        "0.8.15-NULL",
+        "-p",
+        "./logs/snapper.log"
+      ]
+    },
+    {
+      "label": "Rust: cargo build",
+      "type": "cargo",
+      "subcommand": "build",
+      "problemMatcher": [
+        "$rustc"
+      ],
+      "group": "build"
+    },
+    {
+      "label": "Rust: cargo build release",
+      "type": "shell",
+      "problemMatcher": [
+        "$rustc"
+      ],
+      "command": "cargo",
+      "args": [
+        "build",
+        "--release"
+      ]
+    },
+    {
+      "label": "Rust: cargo build windows release",
+      "type": "shell",
+      "problemMatcher": [
+        "$rustc"
+      ],
+      "command": "cross",
+      "args": [
+        "build",
+        "--release",
+        "--target=x86_64-pc-windows-gnu"
+      ]
+    },
+    {
+      "label": "Rust: cargo check",
+      "type": "cargo",
+      "subcommand": "check",
+      "problemMatcher": [
+        "$rustc"
+      ],
+      "group": "build"
+    }
+  ]
+}
