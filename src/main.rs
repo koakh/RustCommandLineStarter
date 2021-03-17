@@ -34,30 +34,37 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
   let args = Cli::from_args();
   // show args
   debug!("{:?}", args);
-
   debug!("apiKey: {}", API_KEY);
-  let command_args = &[String::from("-c"), String::from("ls -lah /tmp")];
-  let bytes = execute_command(command_args);
-  let s = String::from_utf8(bytes).expect("invalid UTF-8");
-  print!("{}", s);
+
+  // test: execute_command
+  test_execute_command();
 
   // test: block request, don't use at same time with tokio
-  // let response = block_request();
-  // debug!("response: {:?}", response);
-
-  // let res = reqwest::get("http://httpbin.org/get").await?;
-  // println!("status: {}", res.status());
-  // println!("headers:\n{:#?}", res.headers());
-  // let body = res.text().await?;
-  // println!("body:\n{}", body);
+  // else `thread 'main' panicked at 'Cannot drop a runtime in a context where blocking is not allowed. This happens when a runtime is dropped from within an asynchronous context.'`
+  // test_block_request();
 
   // test: operating on untyped JSON values
   test_async_request_untyped().await?;
+  
   // test: parsing JSON as strongly typed data structures, and with generics
   test_async_request_generic_typed().await?;
 
   // return result
   search_content(&args.pattern, &args.path)
+}
+
+fn test_execute_command() {
+  let command_args = &[String::from("-c"), String::from("ls -lah /tmp")];
+  let bytes = execute_command(command_args);
+  let s = String::from_utf8(bytes).expect("invalid UTF-8");
+  print!("{}", s);
+}
+
+#[allow(dead_code)]
+fn test_block_request() {
+  // test: block request, don't use at same time with tokio
+  let response = block_request();
+  debug!("response: {:?}", response);
 }
 
 async fn test_async_request_untyped() -> Result<(), Box<dyn std::error::Error>> {

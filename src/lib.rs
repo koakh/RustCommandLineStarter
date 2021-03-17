@@ -6,6 +6,12 @@ use std::io::prelude::*;
 #[allow(unused_imports)]
 use std::io::{self, BufReader, Write};
 
+pub enum {
+  Search(),
+  ReqTyped,
+  ReqTyped,
+}
+
 // in Rust, it is common to structure programs around the data they handle
 #[derive(Debug)]
 #[derive(StructOpt)]
