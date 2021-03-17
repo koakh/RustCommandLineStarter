@@ -18,6 +18,7 @@ use std::io::Read;
 // https://users.rust-lang.org/t/how-to-get-ok-value-return-from-the-function/40848
 
 #[derive(Serialize, Deserialize, Debug)]
+#[serde(rename_all = "camelCase")]
 pub struct HttpBinResponse {
   // must be public
   pub origin: String,
@@ -61,7 +62,7 @@ pub async fn async_request_untyped() -> Result<Value, Box<dyn std::error::Error>
 
 /// Parsing JSON as strongly typed data structures
 // pub async fn async_request() -> Result<HttpBinResponse, Box<dyn std::error::Error>> {
-pub async fn async_request<T: de::DeserializeOwned>() -> Result<Box<T>, Box<dyn std::error::Error>> {  
+pub async fn async_request_generic_typed<T: de::DeserializeOwned>() -> Result<Box<T>, Box<dyn std::error::Error>> {  
   let res = reqwest::get("http://httpbin.org/get").await.unwrap();
   println!("status: {}", res.status());
   println!("headers:\n{:#?}", res.headers());

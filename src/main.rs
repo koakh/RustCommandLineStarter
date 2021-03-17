@@ -8,7 +8,9 @@ mod process;
 // bring data module used data structures
 // self says we’re finding a module that’s a child of the current module (is optional, work without self:: to)
 use self::constants::API_KEY;
-use self::http_client::{HttpBinResponse, async_request, async_request_untyped, block_request};
+use self::http_client::{
+  async_request_generic_typed, async_request_untyped, block_request, HttpBinResponse,
+};
 use self::process::execute_command;
 
 // third party
@@ -50,29 +52,41 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
   // println!("body:\n{}", body);
 
   // test: operating on untyped JSON values
+  test_async_request_untyped().await?;
+  // test: parsing JSON as strongly typed data structures, and with generics
+  test_async_request_generic_typed().await?;
+
+  // return result
+  search_content(&args.pattern, &args.path)
+}
+
+async fn test_async_request_untyped() -> Result<(), Box<dyn std::error::Error>> {
+  // test: operating on untyped JSON values
   let valued_untyped = async_request_untyped().await;
   match valued_untyped {
     Ok(valued_untyped) => {
       println!(
         "valued_untyped: please call {} at the number {}",
         valued_untyped["name"], valued_untyped["phones"][0]
-      )
+      );
+      Ok(())
     }
     Err(error) => {
-      error!("{}", error);
+      // propagate error
+      Err(error)
     }
   }
-  // Parsing JSON as strongly typed data structures, and with generics
-  let value_typed: Result<Box<HttpBinResponse>,_> = async_request().await;
+}
+
+async fn test_async_request_generic_typed() -> Result<(), Box<dyn std::error::Error>> {
+  // test: parsing JSON as strongly typed data structures, and with generics
+  let value_typed: Result<Box<HttpBinResponse>, Box<dyn std::error::Error>> =
+    async_request_generic_typed().await;
   match value_typed {
     Ok(value) => {
-      println!("value_typed: called from origin: {}", value.origin)
+      println!("value_typed: called from origin: {}", value.origin);
+      Ok(())
     }
-    Err(error) => {
-      error!("{}", error);
-    }
+    Err(error) => Err(error),
   }
-
-  // return result
-  search_content(&args.pattern, &args.path)
 }

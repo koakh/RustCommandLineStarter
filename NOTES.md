@@ -28,3 +28,7 @@ use log::{error, warn, info, debug, trace};
 
 trace!("{}", "tracer");
 ```
+
+## Cross Compile
+
+- [Cross compilation for Rust and how to reduce binary sizes by 88%](https://medium.com/@codepitbull/cross-compilation-for-rust-and-how-to-reduce-binary-sizes-by-88-269deea50c1b)
