@@ -20,7 +20,8 @@
         }
       },
       "args": [
-        "-f", "0.8.15-NULL",
+        "search",
+        "-f", "Loading snapper configs",
         "-p", "./logs/snapper.log"
       ],
       "cwd": "${workspaceFolder}"
