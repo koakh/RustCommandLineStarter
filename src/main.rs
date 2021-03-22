@@ -1,7 +1,7 @@
 #![allow(unused_imports)]
 // main lib.rs
 use command_line_apps_in_rust::search_content;
-// use/init modules
+// declare modules
 mod constants;
 mod http_client;
 mod process;
