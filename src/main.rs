@@ -28,7 +28,7 @@ use serde_json::Value;
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
   // or use `env RUST_LOG=output_log=info cargo run -- flags`
-  std::env::set_var("RUST_LOG", "output_log=debug");
+  std::env::set_var("RUST_LOG", "trace");
   // init env logger before anything else and in main
   env_logger::init();
   // the from_args method is meant to be used in your main function.
@@ -36,7 +36,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
   let cli = Cli::from_args();
   // show args
   debug!("{:?}", cli);
-  debug!("apiKey: {}", API_KEY);
+  // debug!("apiKey: {}", API_KEY);
 
   match &cli {
     // test with: `cargo run -- search -f "Loading snapper configs" -p logs/snapper.log`
@@ -56,7 +56,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     }
     // test with: `cargo run -- req-typed`
     Cli::AsyncRequestGenericTyped {} => {
-      test_async_request_generic_typed().await?;
+      test_async_request_get_generic_typed().await?;
       Ok(())
     }
     Cli::Add {
@@ -101,7 +101,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
   // test_async_request_untyped().await?;
 
   // test: parsing JSON as strongly typed data structures, and with generics
-  // test_async_request_generic_typed().await?;
+  // test_async_request_get_generic_typed().await?;
 }
 
 fn test_execute_command(command: &str) {
@@ -139,7 +139,7 @@ async fn test_async_request_untyped() -> Result<(), Box<dyn std::error::Error>> 
   }
 }
 
-async fn test_async_request_generic_typed() -> Result<(), Box<dyn std::error::Error>> {
+async fn test_async_request_get_generic_typed() -> Result<(), Box<dyn std::error::Error>> {
   // test: parsing JSON as strongly typed data structures, and with generics
   let value_typed: Result<Box<HttpBinResponse>, Box<dyn std::error::Error>> =
     async_request_generic_typed().await;

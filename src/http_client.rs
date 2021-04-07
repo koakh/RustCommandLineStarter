@@ -4,6 +4,9 @@ use serde_json::Value;
 use std::collections::HashMap;
 use std::io::Read;
 
+// updated version of this module working with cryptlex api is here
+// ~/Development/@CriticalLinksBitBucket/c3next/c3-cla/cryptlex-cli/src/http_client.rs
+
 // https://rust-lang-nursery.github.io/rust-cookbook/intro.html
 // https://tokio.rs/tokio/tutorial/async
 
